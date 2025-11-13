@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Circular Queue CPU Scheduling Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">CQ Scheduler</div>
+      <nav>
+        <button id="btn-dashboard" class="side-btn active">Dashboard</button>
+        <button id="btn-help" class="side-btn">Help</button>
+        <button id="btn-settings" class="side-btn">Settings</button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <h1>Circular Queue CPU Scheduling Simulator</h1>
+        <div class="header-controls">
+          <label>Quantum <input id="quantum" type="number" value="2" min="1"></label>
+          <button id="add" class="btn">+ Add</button>
+          <button id="start" class="btn primary">▶ Start</button>
+          <button id="clear" class="btn">Clear</button>
+          <div class="play-controls">
+            <button id="play" class="btn">Play</button>
+            <button id="pause" class="btn">Pause</button>
+            <button id="reset" class="btn">Reset</button>
+          </div>
+        </div>
+      </header>
+
+      <div id="dashboard" class="page active">
+        <section class="content">
+          <div class="left">
+            <div class="card">
+              <h3>Processes</h3>
+              <table id="table" class="process-table">
+                <thead><tr><th>PID</th><th>Arrival</th><th>Burst</th><th>Waiting</th><th>TAT</th><th></th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div class="card small-cards">
+              <div class="metric">
+                <div class="label">Avg TAT</div>
+                <div id="avg-tat" class="value">-</div>
+              </div>
+              <div class="metric">
+                <div class="label">Avg WT</div>
+                <div id="avg-wt" class="value">-</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="card">
+              <h3>Gantt Chart</h3>
+              <div class="legend">
+                <span class="leg running"></span> Running
+                <span class="leg waiting"></span> Waiting
+                <span class="leg done"></span> Done
+              </div>
+              <div class="gantt-wrap"><canvas id="gantt" height="120"></canvas></div>
+              <div id="status" class="status">Status: idle</div>
+            </div>
+
+            <div class="card">
+              <h3>Metrics</h3>
+              <pre id="out" class="metrics-out">No results yet</pre>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="help" class="page">
+        <div class="card">
+          <h2>📖 Help & Theory</h2>
+          <h3>Round-Robin (Circular Queue) Scheduling</h3>
+          <p>A CPU scheduling algorithm where each process gets a fixed time quantum. If not finished, it returns to the queue.</p>
+          <h4>How to use:</h4>
+          <ol>
+            <li>Add processes (arrival time, burst time)</li>
+            <li>Set quantum (time slice)</li>
+            <li>Click Start to simulate</li>
+            <li>Use Play/Pause/Reset to control animation</li>
+          </ol>
+          <h4>Metrics:</h4>
+          <ul>
+            <li><strong>TAT:</strong> Completion Time - Arrival Time</li>
+            <li><strong>WT:</strong> TAT - Burst Time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="settings" class="page">
+        <div class="card">
+          <h2>⚙️ Settings</h2>
+          <div class="setting-item">
+            <label>Dark Mode</label>
+            <input id="darkToggle" type="checkbox">
+          </div>
+          <div class="setting-item">
+            <label>Animation Speed</label>
+            <select id="speedSelect">
+              <option value="0.5">Slow</option>
+              <option value="1" selected>Normal</option>
+              <option value="2">Fast</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <button id="resetSettings" class="btn">Reset Settings</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
